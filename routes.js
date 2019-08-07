@@ -67,6 +67,8 @@ router.post('/users',[
         }).then((user) => {
             if(user){
                 res.status(409).json({error: 'User is already existed!'});
+            }else if(req.body.password === ""){
+                res.status(400).json({errors: "password can't be empty string!"})
             }else{
                 // async way to hash the passwd
                 bcrypt.genSalt(5,(err, salt) => {
@@ -76,11 +78,14 @@ router.post('/users',[
                             lastName: req.body.lastName,
                             emailAddress: req.body.emailAddress,
                             password: hash
+                        }).then(() => {
+                            res.setHeader('Location', `/`);
+                            res.status(201).end(); //return a 201 status code and end the response
+                        }).catch((err) => {
+                            next(err)
                         });
                     })
-                })
-                res.location = '/';
-                res.status(201).end(); //return a 201 status code and end the response
+                })  
             }
         })   
     }
@@ -124,7 +129,7 @@ router.post('/courses', authUser, [
             estimatedTime: course.estimatedTime,
             materialsNeeded: course.materialsNeeded
         }).then((course) => {
-            res.location = `/courses/${course.id}`;
+            res.setHeader('Location', `/courses/${course.id}`);
             res.status(201).end();
         }).catch((err) => {
             next(err);
