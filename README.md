@@ -3,6 +3,9 @@
 
 ## Overview of the Provided Project Files
 
+[Live Version](https://course-v1-api.herokuapp.com/).
+
+
 We've supplied the following files for you to use: 
 
 * The `seed` folder contains a starting set of data for your database in the form of a JSON file (`data.json`) and a collection of files (`context.js`, `database.js`, and `index.js`) that can be used to create your app's database and populate it with data (we'll explain how to do that below).
